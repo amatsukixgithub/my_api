@@ -11,10 +11,13 @@ jobs:
           BUNDLER_VERSION: 2.0.2
           RAILS_ENV: test
     executor: ruby/default
+    # working_directoryでstepsを実行するディレクトリを指定します。repoは、リポジトリのことです。
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
           name: Which bundler?
+          command: bundle update--bundler
           command: bundle -v
       - ruby/bundle-install
 
