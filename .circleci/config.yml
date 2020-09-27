@@ -15,9 +15,13 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
+
+      - run :
+          name: Update bundler
+          command: bundle update --bundler
+
       - run:
           name: Which bundler?
-          command: bundle update--bundler
           command: bundle -v
       - ruby/bundle-install
 
