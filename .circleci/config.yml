@@ -18,7 +18,7 @@ jobs:
 
       - run :
           name: Install bundler
-          command: gem install bundler：2.0.2
+          command: gem install bundler
 
       - run:
           name: Which bundler?
