@@ -17,8 +17,8 @@ jobs:
       - checkout
 
       - run :
-          name: Update bundler
-          command: bundle update --bundler
+          name: Install bundler
+          command: gem install bundler：2.0.2
 
       - run:
           name: Which bundler?
