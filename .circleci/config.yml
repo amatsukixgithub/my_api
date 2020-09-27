@@ -10,41 +10,13 @@ jobs:
         environment:
           BUNDLER_VERSION: 2.0.2
           RAILS_ENV: test
-    working_directory: ~/repo
     executor: ruby/default
     steps:
       - checkout
       - run:
-        ame: setup bundler
-        command: |
-          sudo gem update --system
-          sudo gem uninstall bundler
-          sudo rm /usr/local/bin/bundle
-          sudo rm /usr/local/bin/bundler
-          sudo gem install bundler
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      # yarnのインストール
-      - run: yarn install --check-files
-
-      # bundlerのインストール
-      - run:
-          name: install dependencies
-          command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
-
-      - run: bundle exec rake webpacker:compile
-
-      - save_cache:
-          paths:
-            - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
 
       # Reviewdogのインストール
       - run:
