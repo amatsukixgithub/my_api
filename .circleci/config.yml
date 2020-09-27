@@ -8,8 +8,9 @@ jobs:
       # specify the version you desire here
       - image: circleci/ruby:2.6.4-node-browsers
         environment:
-          BUNDLER_VERSION: 2.0.2
+          BUNDLER_VERSION: 2.1.4
           RAILS_ENV: test
+          REVIEWDOG_VERSION: 0.9.11
     executor: ruby/default
     # working_directoryでstepsを実行するディレクトリを指定します。repoは、リポジトリのことです。
     working_directory: ~/repo
