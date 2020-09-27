@@ -1,0 +1,35 @@
+version: 2.1
+orbs:
+  ruby: circleci/ruby@0.1.2
+
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.6.3-stretch-node
+    executor: ruby/default
+    steps:
+      - checkout
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+
+      # Reviewdogのインストール
+      - run:
+          name: Install Reviewdog
+          command: |
+            curl -fSL https://github.com/haya14busa/reviewdog/releases/download/$REVIEWDOG_VERSION/reviewdog_linux_amd64 -o reviewdog && chmod +x ./reviewdog
+
+      # Database setup
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:migrate
+
+      # run tests!
+      - run:
+          name: Rails Test
+          command: bundle exec rake test
+
+      # Rubocop & Reviewdogの実行
+      - run:
+          name: Rubocop & Reviewdog
+          command: bundle exec rubocop | ./reviewdog -f=rubocop -reporter=github-pr-review
