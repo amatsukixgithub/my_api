@@ -17,6 +17,7 @@ AllCops:
     - 'config/**/*'
     - 'script/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
+    - vendor/bundle/**/*
 
 # 日本語でのコメントを許可
 Style/AsciiComments:
